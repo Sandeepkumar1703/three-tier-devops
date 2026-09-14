@@ -1,5 +1,7 @@
 # Three-Tier Multi-Cloud DevOps Application
 
+Author: Sandeep Kumar Prasad
+
 A production-style 3-tier application for managing user authentication and task workflows, built with React, Express, and PostgreSQL, and designed to run locally with Docker Compose while remaining deployable to AWS, Azure, and GCP via Kubernetes, Helm, and Terraform.
 
 ## Overview
