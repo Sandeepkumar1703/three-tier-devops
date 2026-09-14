@@ -1,0 +1,37 @@
+name: Docker Build and Scan
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build frontend image
+        run: docker build -t taskflow-frontend:latest ./frontend
+
+      - name: Build backend image
+        run: docker build -t taskflow-backend:latest ./backend
+
+      - name: Run Trivy vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: taskflow-frontend:latest
+          format: table
+          exit-code: 1
+          ignore-unfixed: true
+
+      - name: Run Trivy vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: taskflow-backend:latest
+          format: table
+          exit-code: 1
+          ignore-unfixed: true

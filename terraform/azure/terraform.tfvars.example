@@ -1,0 +1,3 @@
+location = "eastus"
+resource_group_name = "taskflow-rg"
+project_name = "taskflow"

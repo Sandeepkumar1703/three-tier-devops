@@ -1,0 +1,27 @@
+replicaCount: 2
+
+frontend:
+  image:
+    repository: taskflowacr.azurecr.io/taskflow-frontend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: LoadBalancer
+
+backend:
+  image:
+    repository: taskflowacr.azurecr.io/taskflow-backend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+
+postgres:
+  storage: 15Gi
+
+ingress:
+  enabled: false
+
+config:
+  jwtSecret: "REPLACE_WITH_AZURE_SECRET"
+  apiBaseUrl: "http://backend:5000/api/v1"

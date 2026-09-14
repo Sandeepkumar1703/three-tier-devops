@@ -1,0 +1,27 @@
+replicaCount: 3
+
+frontend:
+  image:
+    repository: 123456789012.dkr.ecr.us-east-1.amazonaws.com/taskflow-dev
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: LoadBalancer
+
+backend:
+  image:
+    repository: 123456789012.dkr.ecr.us-east-1.amazonaws.com/taskflow-dev
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+
+postgres:
+  storage: 20Gi
+
+ingress:
+  enabled: false
+
+config:
+  jwtSecret: "REPLACE_WITH_AWS_SECRET"
+  apiBaseUrl: "http://backend:5000/api/v1"

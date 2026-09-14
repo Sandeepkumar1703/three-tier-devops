@@ -1,0 +1,38 @@
+{
+  "name": "three-tier-multicloud-devops",
+  "description": "Production-style three-tier web application with React, Express, PostgreSQL, Docker, Kubernetes, Helm, Terraform, and CI/CD automation.",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "express",
+    "postgresql",
+    "docker",
+    "kubernetes",
+    "helm",
+    "terraform",
+    "devops",
+    "jwt",
+    "fullstack"
+  ],
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "install:all": "npm install --workspaces",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "test": "npm run test --workspace frontend && npm run test --workspace backend",
+    "test:frontend": "npm run test:run --workspace frontend",
+    "test:backend": "npm run test --workspace backend",
+    "build": "npm run build --workspace frontend",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down -v"
+  }
+}

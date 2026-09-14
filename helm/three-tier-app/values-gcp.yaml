@@ -1,0 +1,27 @@
+replicaCount: 2
+
+frontend:
+  image:
+    repository: us-central1-docker.pkg.dev/taskflow-project/taskflow-repo/taskflow-frontend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: LoadBalancer
+
+backend:
+  image:
+    repository: us-central1-docker.pkg.dev/taskflow-project/taskflow-repo/taskflow-backend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+
+postgres:
+  storage: 10Gi
+
+ingress:
+  enabled: false
+
+config:
+  jwtSecret: "REPLACE_WITH_GCP_SECRET"
+  apiBaseUrl: "http://backend:5000/api/v1"

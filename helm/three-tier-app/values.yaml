@@ -1,0 +1,56 @@
+replicaCount: 2
+
+frontend:
+  image:
+    repository: taskflow-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+backend:
+  image:
+    repository: taskflow-backend
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+postgres:
+  image: postgres:16-alpine
+  username: appuser
+  database: appdb
+  storage: 10Gi
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+ingress:
+  enabled: true
+  className: nginx
+  host: taskflow.local
+  tls: false
+
+config:
+  jwtSecret: change-me
+  apiBaseUrl: http://backend:5000/api/v1

@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+.DS_Store
+coverage/
+dist/
+.vite/
+*.log
+terraform/.terraform/
+terraform/**/*.tfstate
+terraform/**/*.tfstate.*
+terraform/.terraform.lock.hcl
+kubeconfig
+*.pem
+__pycache__/

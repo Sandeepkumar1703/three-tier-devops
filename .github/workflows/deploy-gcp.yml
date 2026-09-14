@@ -1,0 +1,25 @@
+name: Deploy to GCP GKE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Set up kubectl
+        run: gcloud components install kubectl --quiet
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install taskflow ./helm/three-tier-app -f ./helm/three-tier-app/values-gcp.yaml

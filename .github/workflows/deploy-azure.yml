@@ -1,0 +1,22 @@
+name: Deploy to Azure AKS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install taskflow ./helm/three-tier-app -f ./helm/three-tier-app/values-azure.yaml

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm install
+
+      - name: Install backend deps
+        working-directory: backend
+        run: npm install
+
+      - name: Run frontend tests
+        working-directory: frontend
+        run: npm run test:run
+
+      - name: Run backend tests
+        working-directory: backend
+        env:
+          NODE_ENV: test
+          USE_PG_MEM: 'true'
+        run: npx jest --runInBand
+
+      - name: Frontend build
+        working-directory: frontend
+        run: npm run build
+
+      - name: Backend syntax check
+        working-directory: backend
+        run: node --check src/server.js
